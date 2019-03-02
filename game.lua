@@ -34,8 +34,13 @@ function _M.getInputs()
 	inputDeltaDistance[#inputDeltaDistance+1] = 1
 
 	for dy=0,19,1 do
+		string = ""
 		for dx=0,9,1 do
-			inputs[#inputs+1] = _M.getTile(dx, dy)
+			val = _M.getTile(dx, dy)
+			if val == 239 then
+				val = 0
+			end
+			inputs[#inputs+1] = val
 			inputDeltaDistance[#inputDeltaDistance+1] = 1
 		end
 	end

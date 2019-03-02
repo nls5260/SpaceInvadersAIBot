@@ -696,8 +696,16 @@ function displayGenome(genome) --TODO Fix
 	local cells = {}
 	local i = 1
 	local cell = {}
-	for dy=-config.BoxRadius,config.BoxRadius do
-		for dx=-config.BoxRadius,config.BoxRadius do
+	for dx=0,3 do
+		cell = {}
+		cell.x = 50+5*dx
+		cell.y = 70+5*0
+		cell.value = network.neurons[i].value
+		cells[i] = cell
+		i = i + 1
+	end
+	for dy=1,20 do
+		for dx=0,9 do
 			cell = {}
 			cell.x = 50+5*dx
 			cell.y = 70+5*dy
@@ -774,7 +782,7 @@ function displayGenome(genome) --TODO Fix
 		end
 	end
 
-	forms.drawBox(netPicture, 50-config.BoxRadius*5-3,70-config.BoxRadius*5-3,50+config.BoxRadius*5+2,70+config.BoxRadius*5+2,0xFF000000, 0x80808080)
+	forms.drawBox(netPicture, 50-3,70-3,50+10*5+2,70+20*5+2,0xFF000000, 0x80808080)
 	for n,cell in pairs(cells) do
 		if n > Inputs or cell.value ~= 0 then
 			local color = math.floor((cell.value+1)/2*256)
@@ -1002,7 +1010,7 @@ while true do
 	local species = pool.species[pool.currentSpecies]
 	local genome = species.genomes[pool.currentGenome]
 
-	--displayGenome(genome)
+	displayGenome(genome)
 
 	if pool.currentFrame%5 == 0 then
 		evaluateCurrent()
