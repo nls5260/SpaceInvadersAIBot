@@ -698,7 +698,7 @@ function displayGenome(genome) --TODO Fix
 	local cell = {}
 	for dx=0,3 do --
 		cell = {}
-		cell.x = 50+5*dx
+		cell.x = 5+5*dx
 		cell.y = 70+5*0
 		cell.value = network.neurons[i].value
 		cells[i] = cell
@@ -782,7 +782,7 @@ function displayGenome(genome) --TODO Fix
 		end
 	end
 
-	forms.drawBox(netPicture, 5-3,70-3,5+10*5+2,70+20*5+2,0xFF000000, 0x80808080)
+	forms.drawBox(netPicture, 5-3--[[50-3]],70-3,5+10*5+2--[[50+10*5+2]],70+20*5+2,0xFF000000, 0x80808080)
 	for n,cell in pairs(cells) do
 		if n > Inputs or cell.value ~= 0 then
 			local color = math.floor((cell.value+1)/2*256)
