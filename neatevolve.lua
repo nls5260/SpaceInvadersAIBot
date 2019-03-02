@@ -4,7 +4,9 @@
 -- For SMW, make sure you have a save state named "DP1.state" at the beginning of a level,
 -- and put a copy in both the Lua folder and the root directory of BizHawk.
 
-if gameinfo.getromname() == "Super Mario World (USA)" then
+
+-- gets the name of the rom file to run
+gameinfo.getromname() == "Super Mario World (USA)" then
         Filename = "DP1.state"
         ButtonNames = {
                 "A",
@@ -16,17 +18,19 @@ if gameinfo.getromname() == "Super Mario World (USA)" then
                 "Left",
                 "Right",
         }
-elseif gameinfo.getromname() == "Super Mario Bros." then
-        Filename = "SMB1-1.state"
-        ButtonNames = {
-                "A",
-                "B",
-                "Up",
-                "Down",
-                "Left",
-                "Right",
-        }
 end
+
+--elseif gameinfo.getromname() == "Super Mario Bros." then
+        --Filename = "SMB1-1.state"
+        --ButtonNames = {
+                --"A",
+                --"B",
+                --"Up",
+                --"Down",
+                --"Left",
+                --"Right",
+        --}
+--end
 
 BoxRadius = 6
 InputSize = (BoxRadius*2+1)*(BoxRadius*2+1)
@@ -65,12 +69,12 @@ function getPositions()
 
                 screenX = marioX-layer1x
                 screenY = marioY-layer1y
-        elseif gameinfo.getromname() == "Super Mario Bros." then
-                marioX = memory.readbyte(0x6D) * 0x100 + memory.readbyte(0x86)
-                marioY = memory.readbyte(0x03B8)+16
+        --elseif gameinfo.getromname() == "Super Mario Bros." then
+                --marioX = memory.readbyte(0x6D) * 0x100 + memory.readbyte(0x86)
+                --marioY = memory.readbyte(0x03B8)+16
 
-                screenX = memory.readbyte(0x03AD)
-                screenY = memory.readbyte(0x03B8)
+                --screenX = memory.readbyte(0x03AD)
+                --screenY = memory.readbyte(0x03B8)
         end
 end
 
@@ -80,24 +84,24 @@ function getTile(dx, dy)
                 y = math.floor((marioY+dy)/16)
 
                 return memory.readbyte(0x1C800 + math.floor(x/0x10)*0x1B0 + y*0x10 + x%0x10)
-        elseif gameinfo.getromname() == "Super Mario Bros." then
-                local x = marioX + dx + 8
-                local y = marioY + dy - 16
-                local page = math.floor(x/256)%2
+        --elseif gameinfo.getromname() == "Super Mario Bros." then
+                --local x = marioX + dx + 8
+                --local y = marioY + dy - 16
+                --local page = math.floor(x/256)%2
 
-                local subx = math.floor((x%256)/16)
-                local suby = math.floor((y - 32)/16)
-                local addr = 0x500 + page*13*16+suby*16+subx
+                --local subx = math.floor((x%256)/16)
+                --local suby = math.floor((y - 32)/16)
+                --local addr = 0x500 + page*13*16+suby*16+subx
 
-                if suby >= 13 or suby < 0 then
-                        return 0
-                end
+                --if suby >= 13 or suby < 0 then
+                        --return 0
+                --end
 
-                if memory.readbyte(addr) ~= 0 then
-                        return 1
-                else
-                        return 0
-                end
+                --if memory.readbyte(addr) ~= 0 then
+                        --return 1
+                --else
+                        --return 0
+                --end
         end
 end
 
@@ -114,16 +118,16 @@ function getSprites()
                 end
 
                 return sprites
-        elseif gameinfo.getromname() == "Super Mario Bros." then
-                local sprites = {}
-                for slot=0,4 do
-                        local enemy = memory.readbyte(0xF+slot)
-                        if enemy ~= 0 then
-                                local ex = memory.readbyte(0x6E + slot)*0x100 + memory.readbyte(0x87+slot)
-                                local ey = memory.readbyte(0xCF + slot)+24
-                                sprites[#sprites+1] = {["x"]=ex,["y"]=ey}
-                        end
-                end
+        --elseif gameinfo.getromname() == "Super Mario Bros." then
+                --local sprites = {}
+                --for slot=0,4 do
+                        --local enemy = memory.readbyte(0xF+slot)
+                        --if enemy ~= 0 then
+                                --local ex = memory.readbyte(0x6E + slot)*0x100 + memory.readbyte(0x87+slot)
+                                --local ey = memory.readbyte(0xCF + slot)+24
+                                --sprites[#sprites+1] = {["x"]=ex,["y"]=ey}
+                        --end
+                --end
 
                 return sprites
         end
