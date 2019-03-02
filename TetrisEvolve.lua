@@ -1058,10 +1058,12 @@ while true do
 
         -- timeout = timeout - 1
 
-
+        --timeout = time left when mario finishes level
+        --basically, did mario finish before the time ran out?
         -- local timeoutBonus = pool.currentFrame / 4
-        if timeout + timeoutBonus <= 0 then
+        -- if timeout + timeoutBonus <= 0 then
                 -- local fitness = rightmost - pool.currentFrame / 2
+                getScore()
                 local fitness = score
                 -- if gameinfo.getromname() == "Super Mario World (USA)" and rightmost > 4816 then
                 --         fitness = fitness + 1000
@@ -1087,7 +1089,7 @@ while true do
                         nextGenome()
                 end
                 initializeRun()
-        end
+        -- end
 
         local measured = 0
         local total = 0
