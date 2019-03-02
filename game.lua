@@ -7,9 +7,12 @@ function _M.getPositions()
 end
 
 function _M.getScore()
-	local scoreLeft = memory.readbyte(0x0055)
-	local scoreMiddle = memory.readbyte(0x0054)
-	local scoreRight = memory.readbyte(0x0053)
+	local scoreLeft = tonumber(string.format("%x", memory.readbyte(0x0055)))
+
+	local scoreMiddle = tonumber(string.format("%x", memory.readbyte(0x0054)))
+
+	local scoreRight = tonumber(string.format("%x", memory.readbyte(0x0053)))
+
 	local score = scoreLeft*10000 + scoreMiddle*100 + scoreRight
 	local state = memory.readbyte(0x0048)
 	return score, state
