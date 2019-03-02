@@ -19,7 +19,7 @@ end
 --next piece 00BF
 
 BoxRadius = 6
-InputSize = (BoxRadius*2+1)*(BoxRadius*2+1)
+InputSize = 203
 
 Inputs = InputSize+1
 Outputs = #ButtonNames
@@ -49,7 +49,7 @@ function getScore()
     score1 = memory.readbyte(0x0053)
     score2 = memory.readbyte(0x0054)
     score3 = memory.readbyte(0x0055)
-    score = score1*256*256 + score2*256 + score3
+    score = (score2 * 256) + score3
 end
 
 
@@ -1061,7 +1061,7 @@ while true do
         --timeout = time left when mario finishes level
         --basically, did mario finish before the time ran out?
         -- local timeoutBonus = pool.currentFrame / 4
-        -- if timeout + timeoutBonus <= 0 then
+        if memory.readbyte(0x0058) == 0 then
                 -- local fitness = rightmost - pool.currentFrame / 2
                 getScore()
                 local fitness = score
@@ -1089,7 +1089,7 @@ while true do
                         nextGenome()
                 end
                 initializeRun()
-        -- end
+        end
 
         local measured = 0
         local total = 0
@@ -1103,7 +1103,7 @@ while true do
         end
         if not forms.ischecked(hideBanner) then
                 gui.drawText(0, 0, "Gen " .. pool.generation .. " species " .. pool.currentSpecies .. " genome " .. pool.currentGenome .. " (" .. math.floor(measured/total*100) .. "%)", 0xFF000000, 11)
-                gui.drawText(0, 12, "Fitness: " .. math.floor(rightmost - (pool.currentFrame) / 2 - (timeout + timeoutBonus)*2/3), 0xFF000000, 11)
+                gui.drawText(0, 12, "Fitness: " .. math.floor(rightmost - (pool.currentFrame) / 2), 0xFF000000, 11)
                 gui.drawText(100, 12, "Max Fitness: " .. math.floor(pool.maxFitness), 0xFF000000, 11)
         end
 
