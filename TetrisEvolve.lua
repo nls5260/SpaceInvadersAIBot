@@ -1,22 +1,13 @@
 if gameinfo.getromname() == "Tetris" then
         Filename = "Level.state"
         ButtonNames = {
-                "X",
-                "Y",
+                "A",
+                "B",
                 "Down",
                 "Left",
                 "Right",
         }
 end
-
---Inputs
---cur piece x 0040
---cur piece y 0041
---cur pieceid 0042
-
---outputs
---score 0053-0055
---next piece 00BF
 
 BoxRadius = 6
 InputSize = 203
@@ -769,7 +760,7 @@ function fitnessAlreadyMeasured()
         return genome.fitness ~= 0
 end
 
-function displayGenome(genome)
+function displayGenome(genome) --FIX
         local network = genome.network
         local cells = {}
         local i = 1
@@ -1050,27 +1041,9 @@ while true do
 
         joypad.set(controller)
 
-        -- getPositions()
-        -- if currPieceX > rightmost then
-        --         rightmost = currPieceX
-        --         timeout = TimeoutConstant
-        -- end
-
-        -- timeout = timeout - 1
-
-        --timeout = time left when mario finishes level
-        --basically, did mario finish before the time ran out?
-        -- local timeoutBonus = pool.currentFrame / 4
         if memory.readbyte(0x0058) == 0 then
-                -- local fitness = rightmost - pool.currentFrame / 2
                 getScore()
                 local fitness = score
-                -- if gameinfo.getromname() == "Super Mario World (USA)" and rightmost > 4816 then
-                --         fitness = fitness + 1000
-                -- end
-                -- if gameinfo.getromname() == "Super Mario Bros." and rightmost > 3186 then
-                --         fitness = fitness + 1000
-                -- end
                 if fitness == 0 then
                         fitness = -1
                 end
