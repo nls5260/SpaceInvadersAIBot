@@ -8,7 +8,7 @@ _M.PoolDir = _M.BizhawkDir .. "Lua/NES/TetrisAIBot/pool/"
 
 _M.NeatConfig =
 {
-        Filename = "Level9.state",
+        Filename = _M.PoolDir .. "Level9.state",
         Population = 300,
         DeltaDisjoint = 2.0,
         DeltaWeights = 0.4,

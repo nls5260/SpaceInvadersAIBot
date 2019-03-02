@@ -984,11 +984,7 @@ MeasuredLabel = forms.label(form, "Measured: " .. "", 330, 5)
 FitnessLabel = forms.label(form, "Fitness: " .. "", 5, 30)
 MaxLabel = forms.label(form, "Max: " .. "", 130, 30)
 
-CoinsLabel = forms.label(form, "Coins: " .. "", 5, 65)
 ScoreLabel = forms.label(form, "Score: " .. "", 130, 65, 90, 14)
-LivesLabel = forms.label(form, "Lives: " .. "", 130, 80, 90, 14)
-DmgLabel = forms.label(form, "Damage: " .. "", 230, 65, 110, 14)
-PowerUpLabel = forms.label(form, "PowerUp: " .. "", 230, 80, 110, 14)
 
 startButton = forms.button(form, "Start", flipState, 155, 102)
 
@@ -999,14 +995,14 @@ playTopButton = forms.button(form, "Play Top", playTop, 230, 102)
 
 saveLoadFile = forms.textbox(form, config.NeatConfig.Filename .. ".pool", 170, 25, nil, 5, 148)
 saveLoadLabel = forms.label(form, "Save/Load:", 5, 129)
-while true do --TODO Fix
+while true do
 
 	if config.Running == true then
 
 	local species = pool.species[pool.currentSpecies]
 	local genome = species.genomes[pool.currentGenome]
 
-	displayGenome(genome)
+	--displayGenome(genome)
 
 	if pool.currentFrame%5 == 0 then
 		evaluateCurrent()
@@ -1015,57 +1011,17 @@ while true do --TODO Fix
 	joypad.set(controller)
 
 	game.getPositions()
-	if marioX > highScore then
-		highScore = marioX
+	if game.getScore() > highScore then
+		highScore = game.getScore()
 	end
-
-	local hitTimer = game.getMarioHitTimer()
-
-	if checkMarioCollision == true then
-		if hitTimer > 0 then
-			marioHitCounter = marioHitCounter + 1
-			checkMarioCollision = false
-		end
-	end
-
-	if hitTimer == 0 then
-		checkMarioCollision = true
-	end
-
-	powerUp = game.getPowerup()
-	if powerUp > 0 then
-		if powerUp ~= powerUpBefore then
-			powerUpCounter = powerUpCounter+1
-			powerUpBefore = powerUp
-		end
-	end
-
-	Lives = game.getLives()
 
 	if memory.readbyte(0x0058) == 0 then
 
-		local coins = game.getCoins() - startCoins
-		local score = game.getScore() - startScore
-
-		local coinScoreFitness = (coins * 50) + (score * 0.2)
-		if (coins + score) > 0 then
-			console.writeline("Coins and Score added " .. coinScoreFitness .. " fitness")
-		end
-
-		local hitPenalty = marioHitCounter * 100
-		local powerUpBonus = powerUpCounter * 100
-
-		local fitness = coinScoreFitness - hitPenalty + powerUpBonus + highScore - pool.currentFrame / 2
-
-		if startLives < Lives then
-			local ExtraLiveBonus = (Lives - startLives)*1000
-			fitness = fitness + ExtraLiveBonus
-			console.writeline("ExtraLiveBonus added " .. ExtraLiveBonus)
-		end
+		local fitness = highScore
 
 		if highScore > 999999 then
 			fitness = fitness + 1000
-			console.writeline("!!!!!!Beat level!!!!!!!")
+			console.writeline("!!!!!!Maxed out scoreboard!!!!!!!")
 		end
 		if fitness == 0 then
 			fitness = -1
@@ -1097,18 +1053,12 @@ while true do --TODO Fix
 		end
 	end
 
-	gui.drawEllipse(game.screenX-84, game.screenY-84, 192, 192, 0x50000000)
-	forms.settext(FitnessLabel, "Fitness: " .. math.floor(highScore)
+	forms.settext(FitnessLabel, "Fitness: " .. math.floor(highScore))
 	forms.settext(GenerationLabel, "Generation: " .. pool.generation)
 	forms.settext(SpeciesLabel, "Species: " .. pool.currentSpecies)
 	forms.settext(GenomeLabel, "Genome: " .. pool.currentGenome)
 	forms.settext(MaxLabel, "Max: " .. math.floor(pool.maxFitness))
 	forms.settext(MeasuredLabel, "Measured: " .. math.floor(measured/total*100) .. "%")
-	forms.settext(CoinsLabel, "Coins: " .. (game.getCoins() - startCoins))
-	forms.settext(ScoreLabel, "Score: " .. (game.getScore() - startScore))
-	forms.settext(LivesLabel, "Lives: " .. Lives)
-	forms.settext(DmgLabel, "Damage: " .. marioHitCounter)
-	forms.settext(PowerUpLabel, "PowerUp: " .. powerUpCounter)
 
 	pool.currentFrame = pool.currentFrame + 1
 
