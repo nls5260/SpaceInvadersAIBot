@@ -4,7 +4,9 @@
 -- For SMW, make sure you have a save state named "DP1.state" at the beginning of a level,
 -- and put a copy in both the Lua folder and the root directory of BizHawk.
 
-if gameinfo.getromname() == "Super Mario World (USA)" then
+
+-- gets the name of the rom file to run
+gameinfo.getromname() == "Super Mario World (USA)" then
         Filename = "DP1.state"
         ButtonNames = {
                 "A",
@@ -16,17 +18,19 @@ if gameinfo.getromname() == "Super Mario World (USA)" then
                 "Left",
                 "Right",
         }
-elseif gameinfo.getromname() == "Super Mario Bros." then
-        Filename = "SMB1-1.state"
-        ButtonNames = {
-                "A",
-                "B",
-                "Up",
-                "Down",
-                "Left",
-                "Right",
-        }
 end
+
+--elseif gameinfo.getromname() == "Super Mario Bros." then
+        --Filename = "SMB1-1.state"
+        --ButtonNames = {
+                --"A",
+                --"B",
+                --"Up",
+                --"Down",
+                --"Left",
+                --"Right",
+        --}
+--end
 
 BoxRadius = 6
 InputSize = (BoxRadius*2+1)*(BoxRadius*2+1)
