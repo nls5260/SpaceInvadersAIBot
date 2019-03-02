@@ -1,7 +1,7 @@
 local _M = {}
 
 --Change BizhawkDir to your BizHawk directory.
-_M.BizhawkDir = "C:/Users/frank/Desktop/BizHawk/"
+_M.BizhawkDir = "C:/Users/frank/OneDrive/Desktop/BizHawk/"
 
 _M.StateDir = _M.BizhawkDir .. "Lua/NES/TetrisAIBot/state/"
 _M.PoolDir = _M.BizhawkDir .. "Lua/NES/TetrisAIBot/pool/"

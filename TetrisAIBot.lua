@@ -635,7 +635,7 @@ function initializeRun()
 	highScore = 0
 	pool.currentFrame = 0
 	game.clearJoypad()
-	startScore = game.getScore()
+	startScore, trash = game.getScore()
 	local species = pool.species[pool.currentSpecies]
 	local genome = species.genomes[pool.currentGenome]
 	generateNetwork(genome)
@@ -1019,11 +1019,17 @@ while true do
 	joypad.set(controller)
 
 	game.getPositions()
-	if game.getScore() > highScore then
-		highScore = game.getScore()
+	local score, state = game.getScore()
+	if score > highScore then
+		highScore = score
+		scoreUpdated = true
 	end
 
-	if memory.readbyte(0x0058) == 0 then
+	if state == 1 then
+		scoreUpdated = false
+	end
+
+	if (memory.readbyte(0x0058) == 0) or (state > 5 and not scoreUpdated) then
 
 		local fitness = highScore
 

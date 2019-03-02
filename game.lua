@@ -11,7 +11,8 @@ function _M.getScore()
 	local scoreMiddle = memory.readbyte(0x0054)
 	local scoreRight = memory.readbyte(0x0053)
 	local score = scoreLeft*10000 + scoreMiddle*100 + scoreRight
-	return score
+	local state = memory.readbyte(0x0048)
+	return score, state
 end
 
 function _M.getTile(x, y)
@@ -39,9 +40,11 @@ function _M.getInputs()
 			val = _M.getTile(dx, dy)
 			if val == 239 then
 				val = 0
+			else
+				val = 1
 			end
 			inputs[#inputs+1] = val
-			inputDeltaDistance[#inputDeltaDistance+1] = 1
+			inputDeltaDistance[#inputDeltaDistance+1] = 20 - dy*.05
 		end
 	end
 
