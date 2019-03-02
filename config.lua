@@ -37,8 +37,7 @@ _M.ButtonNames =
 	"Right",
 }
 
-_M.BoxRadius = 6 --TODO Fix
-_M.InputSize = (_M.BoxRadius*2+1)*(_M.BoxRadius*2+1) --TODO Fix
+_M.InputSize = 204
 
 _M.Running = false
 

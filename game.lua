@@ -10,7 +10,7 @@ function _M.getScore()
 	local scoreLeft = memory.readbyte(0x0055)
 	local scoreMiddle = memory.readbyte(0x0054)
 	local scoreRight = memory.readbyte(0x0053)
-	local score = scoreRight --TODO use full score
+	local score = scoreLeft*10000 + scoreMiddle*100 + scoreRight
 	return score
 end
 
@@ -23,6 +23,15 @@ function _M.getInputs()
 
 	local inputs = {}
 	local inputDeltaDistance = {}
+
+	inputs[#inputs+1] = currentX
+	inputs[#inputs+1] = currentY
+	inputs[#inputs+1] = memory.readbyte(0x0042)
+	inputs[#inputs+1] = memory.readbyte(0x00BF)
+	inputDeltaDistance[#inputDeltaDistance+1] = 1
+	inputDeltaDistance[#inputDeltaDistance+1] = 1
+	inputDeltaDistance[#inputDeltaDistance+1] = 1
+	inputDeltaDistance[#inputDeltaDistance+1] = 1
 
 	for dy=0,19,1 do
 		for dx=0,9,1 do
