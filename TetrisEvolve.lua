@@ -728,8 +728,7 @@ function evaluateCurrent()
                 controller["P1 Left"] = false
                 controller["P1 Right"] = false
         end
-        if controller["P1 Up"] and controller["P1 Down"] then
-                controller["P1 Up"] = false
+        if controller["P1 Down"] then
                 controller["P1 Down"] = false
         end
 
