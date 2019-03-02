@@ -231,7 +231,7 @@ function evaluateNetwork(network, inputs)
 
         local outputs = {}
         for o=1,Outputs do
-                local button = "P1 " .. ButtonNames[o]
+                local button = ButtonNames[o]
                 if network.neurons[MaxNodes+o].value > 0 then
                         outputs[button] = true
                 else
@@ -699,7 +699,7 @@ end
 function clearJoypad()
         controller = {}
         for b = 1,#ButtonNames do
-                controller["P1 " .. ButtonNames[b]] = false
+                controller[ButtonNames[b]] = false
         end
         joypad.set(controller)
 end
@@ -724,12 +724,12 @@ function evaluateCurrent()
         inputs = getInputs()
         controller = evaluateNetwork(genome.network, inputs)
 
-        if controller["P1 Left"] and controller["P1 Right"] then
-                controller["P1 Left"] = false
-                controller["P1 Right"] = false
+        if controller["Left"] and controller["Right"] then
+                controller["Left"] = false
+                controller["Right"] = false
         end
-        if controller["P1 Down"] then
-                controller["P1 Down"] = false
+        if controller["Down"] then
+                controller["Down"] = false
         end
 
         joypad.set(controller)
